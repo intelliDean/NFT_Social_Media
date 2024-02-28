@@ -7,9 +7,6 @@ import "./Err.sol";
 import "./NFTFactory.sol";
 
 
-
-
-
 contract NFTSocialMedia {
 
     address private owner;
@@ -101,6 +98,10 @@ contract NFTSocialMedia {
         if (!loggedIn[msg.sender]) revert Err.YOU_ARE_NOT_LOGGED_IN__LOG_IN_TO_CONTINUE();
     }
 
+    function onlyGroupMember(bytes32 _groupId) private view {
+        if (!groupMembers[msg.sender][_groupId]) revert Err.YOU_ARE_NOT_A_MEMBER_OF_THIS_GROUP();
+    }
+
     function registerUser(
         string calldata _fullName,
         string calldata _username,
@@ -157,12 +158,11 @@ contract NFTSocialMedia {
 
         Post storage _post = posts[_postId];
         _post.postId = _postId;
-        //this content will be the NFT eventually
         _post.content = _content;
         _post.nftURI = _uri;
         _post.postTime = block.timestamp;
 
-        //push post into necesary places
+        //push post into necessary places
         feeds.push(_post);
         accounts[msg.sender].posts.push(_post);
 
@@ -238,10 +238,6 @@ contract NFTSocialMedia {
 
         groupMembers[msg.sender][_groupId] = true;
         _group.member.push(msg.sender);
-    }
-
-    function onlyGroupMember(bytes32 _groupId) private view {
-        if (!groupMembers[msg.sender][_groupId]) revert Err.YOU_ARE_NOT_A_MEMBER_OF_THIS_GROUP();
     }
 
     function membersPostOnGroup(bytes32 _groupId, string memory _content, string memory _uri) external {
