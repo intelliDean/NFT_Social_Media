@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
-import "contracts/socialMedia/INFTs.sol";
-import "contracts/socialMedia/NFTs.sol";
+import "./NFTContract.sol";
+import "contracts/INFTContract.sol";
+
 
 contract NFTFactory {
 
@@ -22,12 +23,12 @@ contract NFTFactory {
     }
 
     function mintNFT(address _to, string memory _uri) external returns (bool) {
-        INFTs(eachNFTContract[msg.sender]).safeMint(_to, _uri);
+        INFTContract(eachNFTContract[msg.sender]).safeMint(_to, _uri);
         return true;
     }
 
     function getNFT(uint256 _tokenId) external view returns (string memory) {
-        return INFTs(eachNFTContract[msg.sender]).tokenURI(_tokenId);
+        return INFTContract(eachNFTContract[msg.sender]).tokenURI(_tokenId);
     }
 
 }

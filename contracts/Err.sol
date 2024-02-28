@@ -10,4 +10,5 @@ contract Err {
     error ALREADY_REGISTERED__LOGIN();
     error YOU_ARE_NOT_LOGGED_IN__LOG_IN_TO_CONTINUE();
     error COULD_NOT_CREATE_NFT();
+    error YOU_ARE_NOT_A_MEMBER_OF_THIS_GROUP();
 }

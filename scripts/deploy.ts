@@ -7,7 +7,7 @@ async function main() {
     await NFTFactory.waitForDeployment();
 
 
-    const NFTSocialMedia = await ethers.deployContract("NFTSocialMedia");
+    const NFTSocialMedia = await ethers.deployContract("NFTSocialMedia", [NFTFactory.target]);
 
     await NFTSocialMedia.waitForDeployment();
 
